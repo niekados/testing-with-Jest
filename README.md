@@ -44,7 +44,7 @@ look in Jest.
 - I want to get the result of 42
 - I expect 20 + 22 equal 42
 
-``` #JavaScript
+``` JavaScript
 describe("calculator tests",() => {
     describe("addition tests", () => {
         test("should return 42", () => {
@@ -69,3 +69,38 @@ Now this is called a "matcher" and in  Jest we have several "matchers" available
 "to be", which we've used  here, tests for exact equality.  
 It's like using the triple equals(===)  sign in JavaScript to test for both value and type.
 If we just wanted to test for value  then we could use the "toEqual" matcher instead.
+
+## Storing Tests
+
+Where should we store our tests? Well opinion  on this differs, some people say that unit tests  
+should be in the same directory as the code  that we're testing. Others have the convention  
+of putting tests in a different directory. For your own project, it depends on your  
+preference but just be consistent  with whatever you choose.
+For these lessons, I'm going to put  the tests in a separate directory  
+inside the scripts directory, called 'tests'.
+
+## Export functions
+
+- export function from our .js `module.exports = addition;`
+- in test file we add this line `const addition = require("../calc");`
+
+## Writing test
+
+1. Write test that fails
+```javascript
+describe("Calculator", () => {
+    describe("Addition function", () => {
+        test("should return 42 for 20 + 22", () => {
+            expect(addition(20,22)).toBe(42)
+        })
+    });
+});
+```
+2. Write just enough code for test to pass
+```javascript
+function addition() {
+    return 42;
+};
+```
+3. Improove our code
+
