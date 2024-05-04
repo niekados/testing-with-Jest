@@ -35,6 +35,8 @@ The error is because, as the line  above says, there were no tests found.
 
 ## Describing Tests
 
+`calc.js , calc.test.js`
+
 Jest has function  names that match the English words,  
 which make things easier to understand. So here's how a test description would  
 look in Jest. 
@@ -120,4 +122,53 @@ function addition(num1, num2) {
     return num1 + num2;
 };
 
+```
+
+## Mocking
+
+`index.html , button.js , button.test.js`
+
+With new Jest default config, we need to add this commment at the top of test file: 
+
+```javascript
+/**
+ * @jest-environment jsdom
+ */
+```
+
+Jest has a clever way, which is called mocking, providing a simulated environment to run our tests in. 
+Rather than loading an entire  web page, we can get Jest  
+to simulate parts of the page that  we can then run our tests against. 
+Let's start with a simple example.  
+Here, you'll see we have a simple web page it  consists of a heading, a button which calls  
+the button click function when it's clicked,  and an empty paragraph with the ID of "par".
+it's also loading the button.js  script which contains our click button function.
+When the button is clicked, the paragraph text  will change to, "you clicked".  
+
+Jest ships with a built-in mock DOM called **jsdom**,  
+which we can use.
+
+## Load and attach entire HTML to mock DOM
+
+if  you want to test more than one DOM  
+component. Firstly, you could just add all of the components  
+to the mock DOM similar to how  we did in the previous video. 
+This would work perfectly  well, but with one drawback,  
+if you change the original HTML file you'd  also need to change the HTML in your test. 
+This isn't an issue when  it's just one HTML fragment,  
+but it can become problematic if  you've lots of components to test.
+The second approach, then, is to load the  entire HTML page and attach it to the mock DOM. 
+
+we're going to add in the Node `fs` module.  
+This is a file system handling module built into  Node that allows us to open read and write files.
+
+```javascript
+// button.test.js
+beforeEach(() => {
+    let fs = require("fs");
+    let fileContents = fs.readFileSync("index.html", "utf-8");
+    document.open();
+    document.write(fileContents);
+    document.close();
+});
 ```
